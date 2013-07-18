@@ -1,78 +1,111 @@
 <!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Timeywimey by StrictlySkyler</title>
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Timeywimey</h1>
+        <p>A task scheduler and idle-detector for JavaScript.  (Goes &quot;Ding!&quot; when there's stuff.)</p>
 
-  <title>Timeywimey</title>
-  <meta name="description" content="A task scheduler and idle-detector for JavaScript.  (Goes &quot;Ding!&quot; when there's stuff.)">
+        <p class="view"><a href="https://github.com/StrictlySkyler/timeywimey">View the Project on GitHub <small>StrictlySkyler/timeywimey</small></a></p>
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-</head>
-
-<body>
-
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Timeywimey</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">A task scheduler and idle-detector for JavaScript.  (Goes &quot;Ding!&quot; when there's stuff.)</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/StrictlySkyler/timeywimey/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/StrictlySkyler/timeywimey/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/StrictlySkyler/timeywimey" class="code">View Timeywimey on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h1>
+        <ul>
+          <li><a href="https://github.com/StrictlySkyler/timeywimey/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/StrictlySkyler/timeywimey/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/StrictlySkyler/timeywimey">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
 <a name="timeywimey" class="anchor" href="#timeywimey"><span class="octicon octicon-link"></span></a>timeywimey</h1>
 
 <h1></h1>
 
-<p><img src="http://25.media.tumblr.com/tumblr_lh1tjkLSkG1qa0q13o1_500.jpg" alt="Timey-Wimey Device"></p>
+<p><img src="http://25.media.tumblr.com/tumblr_lh1tjkLSkG1qa0q13o1_500.jpg" alt="Timeywimey Device"></p>
 
 <p>A task scheduler and idle-detector for JavaScript.</p>
 
 <h2>
 <a name="purpose" class="anchor" href="#purpose"><span class="octicon octicon-link"></span></a>Purpose</h2>
 
-<p>Sometimes, a task takes a long time to run.  During those sometimes, we also sometimes need to update the data which will power that task.  (Animations, for example.)  As such, we want to be able to execute the task, but <em>only</em> after we have the most up to date data.</p>
+<p>Sometimes, a task takes a long time to run. During those sometimes, we also sometimes need to update the data which will power that task. (Animations, for example.) As such, we want to be able to execute the task, but only after we have the most up to date data.</p>
 
 <p>Or, if it's an expensive task, we only want to do it when we think the JS engine isn't in the middle of anything, and the user isn't doing anything we'd cause to hang.</p>
 
 <p>In other words, we need a scheduler with a li'l bit of brains in it.</p>
-        </article>
-      </div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Scheduling a task is simple:</p>
+
+<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">scheduleTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeCoffee</span><span class="p">);</span>
+</pre></div>
+
+<p>Timeywimey is smart enough to execute the task as soon as it can; either when it thinks your app is idle, or when the timer for that specific task occurs, but only of no new calls have been made to it in the meanwhile.</p>
+
+<p>Given the above example, if another task is scheduled for <code>'breakfast'</code> before it's been triggered:</p>
+
+<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">scheduleTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeYogurt</span><span class="p">);</span>
+</pre></div>
+
+<p>The timer is reset, and when it fires it'll trigger both tasks.</p>
+
+<p>Also, if timeywimey thinks that the JS engine isn't doing anything intensive, it'll go ahead and execute your tasks for you.</p>
+
+<h2>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<p><code>this.idleThreshold</code>
+Determines how many ticks pass before timeywimey calls the system "idle".</p>
+
+<p><code>this.tick</code>
+Determines how often to check whether the system is working or not.</p>
+
+<p><code>this.tasks</code>
+A hash of all the tasks registered for timeywimey.  It's possible to browse this hash for various information about the tasks, or to modify them, if for some reason you need to do so.</p>
+
+<p><code>this.defaultInterval</code>
+The default amount of time to wait before executing a task.  Increasing this provides more time for all tasks to wait before attempting to execute.</p>
+
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
+
+<p>Pop it in a script tag, use an async loader, or whathaveyou.</p>
+
+<p><code>TW.queueTask(label, callback [, queue])</code>
+Schedule <code>callback</code> to be executed when the <code>label</code> task is executed.  If the optional <code>queue</code> is true, the callback will be added to a queue, with any existing callbacks.  Queueing a task without passing something truthy as the third argument will default to <code>false</code>, which replaces the existing queue for this task with the single <code>callback</code> just passed.</p>
+
+<p><code>TW.executeTasks(label)</code>
+Executes all queued tasks for a given queue.</p>
+
+<p><code>TW.executeIdleTasks()</code>
+Used to execute all the queued tasks when the system is idle, but can be called to immediately execute all tasks.</p>
+
+<p><code>TW.working()</code>
+Overrride this with whatever kind of logic and/or graphics you'd like to show when a long-running task occurs.</p>
+
+<p><code>TW.finished()</code>
+Override this with the logic and/or graphics to show then that long-running task completes.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/StrictlySkyler">StrictlySkyler</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/StrictlySkyler" class="avatar"><img src="https://secure.gravatar.com/avatar/46e5e2f10a4598958ac8a9b2863df152?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/StrictlySkyler">StrictlySkyler</a> maintains <a href="https://github.com/StrictlySkyler/timeywimey">Timeywimey</a></p>
-
-
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/StrictlySkyler/timeywimey/tarball/master" class="tar">tar</a><a href="https://github.com/StrictlySkyler/timeywimey/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-  
-</body>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
 </html>
