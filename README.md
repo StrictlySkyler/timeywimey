@@ -64,3 +64,7 @@ Overrride this with whatever kind of logic and/or graphics you'd like to show wh
 
 `TW.finished()`
 Override this with the logic and/or graphics to show then that long-running task completes.
+
+## Special Thanks
+
+@drpowell had the original idea, and the entire [OpenBio Codefest 2013](http://www.open-bio.org/wiki/Codefest_2013) group, from where this sprung.
