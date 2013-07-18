@@ -29,21 +29,21 @@
         }
       }
 
-      Schedule.working = function working () {
+      TW.working = function working () {
         console.log('This one might take a while...');
       };
 
-      Schedule.finished = function finished () {
+      TW.finished = function finished () {
         console.log('...Whew!  Finished.');
       };
 
-      Schedule.scheduleTask('foo', foo);
-      Schedule.scheduleTask('bar', bar);
+      TW.scheduleTask('foo', foo);
+      TW.scheduleTask('bar', bar);
 
-      Schedule.scheduleTask('foo', wat);
+      TW.scheduleTask('foo', wat);
 
       var interval = setInterval(function () {
-        Schedule.scheduleTask('foo', random);
+        TW.scheduleTask('foo', random);
       }, 500);
       
     </script>

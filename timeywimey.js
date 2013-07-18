@@ -1,7 +1,9 @@
-// Todo: add stepping through the tasks one by one!
-!(function setupSchedule (root) {
+// Todo: 
+// 1. Add stepping through the tasks one by one!
+// 2. Tracking for user input!
+!(function setupTimeyWimey (root) {
 
-  function Schedule () {
+  function TimeyWimey () {
     
     var count = 0;
     var _this = this;
@@ -45,7 +47,7 @@
     checkIdle();
   }
 
-  Schedule.prototype.scheduleTask = function scheduleTask (label, callback) {
+  TimeyWimey.prototype.scheduleTask = function scheduleTask (label, callback) {
     var _this = this;
 
     if (this.tasks[label]) {
@@ -73,7 +75,7 @@
 
   };
 
-  Schedule.prototype.executeTasks = function executeTasks (label) {
+  TimeyWimey.prototype.executeTasks = function executeTasks (label) {
     var i;
     var _callbacks;
     var duration;
@@ -112,7 +114,7 @@
 
   };
 
-  Schedule.prototype.executeIdleTasks = function executeIdleTasks () {
+  TimeyWimey.prototype.executeIdleTasks = function executeIdleTasks () {
     var each;
 
     for (each in this.tasks) {
@@ -128,14 +130,14 @@
     }
   };
 
-  Schedule.prototype.working = function working () {
+  TimeyWimey.prototype.working = function working () {
     console.log('Handling a potentially long-running task...');
   };
 
-  Schedule.prototype.finished = function finished () {
+  TimeyWimey.prototype.finished = function finished () {
     console.log('...Potentially long-running task complete.');
   };
 
-  root.Schedule = new Schedule();
+  root.TW = new TimeyWimey();
 
 }(this));

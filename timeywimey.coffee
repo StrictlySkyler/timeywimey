@@ -1,6 +1,8 @@
-# Todo: add stepping through the tasks one by one!
-not (setupSchedule = (root) ->
-  Schedule = ->
+# Todo: 
+# 1. Add stepping through the tasks one by one!
+# 2. Tracking for user input!
+not (setupTimeyWimey = (root) ->
+  TimeyWimey = ->
     count = 0
     _this = this
     checkIdle = checkIdle = ->
@@ -25,7 +27,7 @@ not (setupSchedule = (root) ->
     @tasks = {}
     @defaultInterval = 1000
     checkIdle()
-  Schedule::scheduleTask = scheduleTask = (label, callback) ->
+  TimeyWimey::scheduleTask = scheduleTask = (label, callback) ->
     _this = this
     if @tasks[label]
       clearTimeout @tasks[label].timer  if Date.now() - @tasks[label].start >= @tasks[label].timer
@@ -41,7 +43,7 @@ not (setupSchedule = (root) ->
     , @tasks[label].interval)
     @tasks[label]
 
-  Schedule::executeTasks = executeTasks = (label) ->
+  TimeyWimey::executeTasks = executeTasks = (label) ->
     i = undefined
     _callbacks = undefined
     duration = undefined
@@ -65,7 +67,7 @@ not (setupSchedule = (root) ->
     else
       false
 
-  Schedule::executeIdleTasks = executeIdleTasks = ->
+  TimeyWimey::executeIdleTasks = executeIdleTasks = ->
     each = undefined
     for each of @tasks
       if @tasks.hasOwnProperty(each)
@@ -73,11 +75,11 @@ not (setupSchedule = (root) ->
           @tasks[each].interval = @defaultInterval
           @executeTasks each
 
-  Schedule::working = working = ->
+  TimeyWimey::working = working = ->
     console.log "Handling a potentially long-running task..."
 
-  Schedule::finished = finished = ->
+  TimeyWimey::finished = finished = ->
     console.log "...Potentially long-running task complete."
 
-  root.Schedule = new Schedule()
+  root.TW = new TimeyWimey()
 (this))
