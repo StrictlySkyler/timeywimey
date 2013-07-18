@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="scheduletasks.js"></script>
+  </head>
+  <body>
+    <script>
+      function foo () {
+        console.log('foo');
+      }
+
+      function bar () {
+        console.log('bar');
+      }
+
+      function random () {
+        console.log(Math.random());
+      }
+
+      function wat () {
+        var i = 0;
+
+        while (i < Math.pow(10, 9)) {
+          i++;
+        }
+
+        if (i <= Math.pow(10, 9)) {
+          console.log('what');
+        }
+      }
+
+      Schedule.working = function working () {
+        console.log('This one might take a while...');
+      };
+
+      Schedule.finished = function finished () {
+        console.log('...Whew!  Finished.');
+      };
+
+      Schedule.scheduleTask('foo', foo);
+      Schedule.scheduleTask('bar', bar);
+
+      Schedule.scheduleTask('foo', wat);
+
+      var interval = setInterval(function () {
+        Schedule.scheduleTask('foo', random);
+      }, 500);
+      
+    </script>
+  </body>
+</html>
