@@ -1,5 +1,4 @@
 # timeywimey
-==========
 
 ![Timeywimey Device](http://25.media.tumblr.com/tumblr_lh1tjkLSkG1qa0q13o1_500.jpg)
 
