@@ -31,8 +31,6 @@
         <h1>
 <a name="timeywimey" class="anchor" href="#timeywimey"><span class="octicon octicon-link"></span></a>timeywimey</h1>
 
-<h1></h1>
-
 <p><img src="http://25.media.tumblr.com/tumblr_lh1tjkLSkG1qa0q13o1_500.jpg" alt="Timeywimey Device"></p>
 
 <p>A task scheduler and idle-detector for JavaScript.</p>
@@ -83,7 +81,7 @@ The default amount of time to wait before executing a task.  Increasing this pro
 <h2>
 <a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
 
-<p>Pop it in a script tag, use an async loader, or whathaveyou.</p>
+<p>Pop it in a script tag, use an async loader, or whathaveyou.  Provided in vanilla and coffee for your tasting preference.</p>
 
 <p><code>TW.queueTask(label, callback [, queue])</code>
 Schedule <code>callback</code> to be executed when the <code>label</code> task is executed.  If the optional <code>queue</code> is true, the callback will be added to a queue, with any existing callbacks.  Queueing a task without passing something truthy as the third argument will default to <code>false</code>, which replaces the existing queue for this task with the single <code>callback</code> just passed.</p>
@@ -99,6 +97,11 @@ Overrride this with whatever kind of logic and/or graphics you'd like to show wh
 
 <p><code>TW.finished()</code>
 Override this with the logic and/or graphics to show then that long-running task completes.</p>
+
+<h2>
+<a name="special-thanks" class="anchor" href="#special-thanks"><span class="octicon octicon-link"></span></a>Special Thanks</h2>
+
+<p><a href="https://github.com/drpowell">@drpowell</a> had the original idea, and the entire <a href="http://www.open-bio.org/wiki/Codefest_2013">OpenBio Codefest 2013</a> group, from where this sprung.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/StrictlySkyler">StrictlySkyler</a></p>
