@@ -67,4 +67,4 @@ Override this with the logic and/or graphics to show then that long-running task
 
 ## Special Thanks
 
-@drpowell had the original idea, and the entire [OpenBio Codefest 2013](http://www.open-bio.org/wiki/Codefest_2013) group, from where this sprung.
+[@drpowell](https://github.com/drpowell) had the original idea, and the entire [OpenBio Codefest 2013](http://www.open-bio.org/wiki/Codefest_2013) group, from where this sprung.
