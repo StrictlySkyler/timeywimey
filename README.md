@@ -48,7 +48,7 @@ The default amount of time to wait before executing a task.  Increasing this pro
 
 ## API
 
-Pop it in a script tag, use an async loader, or whathaveyou.
+Pop it in a script tag, use an async loader, or whathaveyou.  Provided in vanilla and coffee for your tasting preference.
 
 `TW.queueTask(label, callback [, queue])`
 Schedule `callback` to be executed when the `label` task is executed.  If the optional `queue` is true, the callback will be added to a queue, with any existing callbacks.  Queueing a task without passing something truthy as the third argument will default to `false`, which replaces the existing queue for this task with the single `callback` just passed.
