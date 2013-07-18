@@ -2,16 +2,18 @@
 !(function setupSchedule (root) {
 
   function Schedule () {
-    var lastIdle = Date.now();
+    
     var count = 0;
     var _this = this;
     
     var checkIdle = function checkIdle () {
+      var lastCalled = Date.now();
 
       setTimeout(function idle () {
         var now = Date.now();
+        var gap = now - lastCalled;
 
-        if (now - lastIdle > _this.tick) {
+        if (gap > (_this.tick + 2)) {
 
           count = 0;
 
@@ -19,25 +21,24 @@
 
         } else {
 
-          lastIdle = now;
+          lastCalled = now;
           count++;
 
         }
 
-        console.log(now - lastIdle);
-
         if (count >= _this.idleThreshold) {
+          
           _this.idle = true;
 
           _this.executeIdleTasks();
         }
 
         checkIdle();
-      }, this.tick);
+      }, _this.tick);
     };
 
     this.idleThreshold = 100;
-    this.tick = 50;
+    this.tick = 10;
     this.tasks = {};
     this.defaultInterval = 1000;
 
@@ -114,10 +115,15 @@
   Schedule.prototype.executeIdleTasks = function executeIdleTasks () {
     var each;
 
-    console.log('Idle detected.  Executing available tasks.');
     for (each in this.tasks) {
-      if (this.hasOwnProperty(each)) {
-        this.executeTasks(each);
+      if (this.tasks.hasOwnProperty(each)) {
+
+        if (this.tasks[each].callbacks) {
+
+          this.tasks[each].interval = this.defaultInterval;
+          this.executeTasks(each);
+        }
+        
       }
     }
   };
