@@ -1,5 +1,4 @@
 // Todo: 
-// 1. Add stepping through the tasks one by one!
 // 2. Tracking for user input!
 !(function setupTimeyWimey (root) {
 
@@ -118,6 +117,26 @@
     } else {
 
       return false;
+    }
+
+  };
+
+  TimeyWimey.prototype.nextTask = function nextTask (label) {
+
+    if (this.tasks[label].callbacks) {
+      this.tasks[label].callbacks[0]();
+
+      return this.tasks[label].callbacks.shift();
+    }
+
+  };
+
+  TimeyWimey.prototype.lastTask = function lastTask (label) {
+
+    if (this.tasks[label].callbacks) {
+      this.tasks[label].callbacks[this.tasks[label].callbacks.length - 1]();
+
+      return this.tasks[label].callbacks.pop();
     }
 
   };

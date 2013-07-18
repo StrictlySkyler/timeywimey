@@ -20,7 +20,7 @@ Scheduling a task is simple:
 TW.scheduleTask('breakfast', getSomeCoffee);
 ```
 
-Timeywimey is smart enough to execute the task as soon as it can; either when it thinks your app is idle, or when the timer for that specific task occurs, but only of no new calls have been made to it in the meanwhile.
+Timeywimey is smart enough to execute the task as soon as it can; either when it thinks your app is idle, or when the timer for that specific task occurs, but only if no new calls have been made to it in the meanwhile.
 
 Given the above example, if another task is scheduled for `'breakfast'` before it's been triggered:
 
@@ -50,20 +50,40 @@ The default amount of time to wait before executing a task.  Increasing this pro
 
 Pop it in a script tag, use an async loader, or whathaveyou.  Provided in vanilla and coffee for your tasting preference.
 
-`TW.queueTask(label, callback [, queue])`
+```javascript
+TW.queueTask(label, callback [, queue])
+```
 Schedule `callback` to be executed when the `label` task is executed.  If the optional `queue` is true, the callback will be added to a queue, with any existing callbacks.  Queueing a task without passing something truthy as the third argument will default to `false`, which replaces the existing queue for this task with the single `callback` just passed.
 
-`TW.executeTasks(label)`
+```javascript
+TW.executeTasks(label)
+```
 Executes all queued tasks for a given queue.
 
-`TW.executeIdleTasks()`
+```javascript
+TW.executeIdleTasks()
+```
 Used to execute all the queued tasks when the system is idle, but can be called to immediately execute all tasks.
 
-`TW.working()`
+```javascript
+TW.working()
+```
 Overrride this with whatever kind of logic and/or graphics you'd like to show when a long-running task occurs.
 
-`TW.finished()`
+```javascript
+TW.finished()
+```
 Override this with the logic and/or graphics to show then that long-running task completes.
+
+```javascript
+TW.nextTask();
+```
+Executes the next task in a given queue immediately, and removes it from the array.
+
+```javascript
+TW.lastTask();
+```
+Executes the last (most recently) added task to the queue, and removes it from the array.
 
 ## Special Thanks
 
