@@ -25,19 +25,24 @@ not (setupTimeyWimey = (root) ->
     @idleThreshold = 100
     @tick = 10
     @tasks = {}
-    @defaultInterval = 1000
+    @defaultInterval = 100
     checkIdle()
-  TimeyWimey::scheduleTask = scheduleTask = (label, callback) ->
+  TimeyWimey::queueTask = queueTask = (label, callback, queue) ->
     _this = this
+    queue = queue or false
     if @tasks[label]
       clearTimeout @tasks[label].timer  if Date.now() - @tasks[label].start >= @tasks[label].timer
       @tasks[label].callbacks = @tasks[label].callbacks or []
-      @tasks[label].callbacks.push callback
+      if @tasks[label].queue
+        @tasks[label].callbacks.push callback
+      else
+        @tasks[label].callbacks = [callback]
     else
       @tasks[label] =
         callbacks: [callback]
         interval: @defaultInterval
         start: Date.now()
+        queue: queue
     @tasks[label].timer = setTimeout(->
       _this.executeTasks label
     , @tasks[label].interval)
