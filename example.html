@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <script src="scheduletasks.js"></script>
+    <script src="timeywimey.js"></script>
   </head>
   <body>
     <script>
@@ -37,13 +37,14 @@
         console.log('...Whew!  Finished.');
       };
 
-      TW.scheduleTask('foo', foo);
-      TW.scheduleTask('bar', bar);
+      TW.queueTask('foo', foo);
+      TW.queueTask('bar', bar);
 
-      TW.scheduleTask('foo', wat);
+      TW.queueTask('foo', wat);
 
       var interval = setInterval(function () {
-        TW.scheduleTask('foo', random);
+        TW.queueTask('foo', random, true);
+        TW.queueTask('foo', random, true);
       }, 500);
       
     </script>

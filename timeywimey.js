@@ -42,13 +42,14 @@
     this.idleThreshold = 100;
     this.tick = 10;
     this.tasks = {};
-    this.defaultInterval = 1000;
+    this.defaultInterval = 100;
 
     checkIdle();
   }
 
-  TimeyWimey.prototype.scheduleTask = function scheduleTask (label, callback) {
+  TimeyWimey.prototype.queueTask = function queueTask (label, callback, queue) {
     var _this = this;
+    queue = queue || false;
 
     if (this.tasks[label]) {
       if (Date.now() - this.tasks[label].start >= this.tasks[label].timer) {
@@ -56,14 +57,21 @@
       }
 
       this.tasks[label].callbacks = this.tasks[label].callbacks || [];
-      this.tasks[label].callbacks.push(callback);
+
+      if (this.tasks[label].queue) {
+        this.tasks[label].callbacks.push(callback);
+      } else {
+        this.tasks[label].callbacks = [callback];
+      }
+      
 
     } else {
 
       this.tasks[label] = {
         callbacks: [callback],
         interval: this.defaultInterval,
-        start: Date.now()
+        start: Date.now(),
+        'queue': queue
       };
     }
 
