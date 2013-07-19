@@ -1,0 +1,30 @@
+{
+  "name": "timeywimey",
+  "version": "0.5.0",
+  "description": "A task scheduler and idle-detector for JavaScript.  Goes ding when there's stuff.",
+  "keywords": "idle, schedule, scheduler, time, task, tasks",
+  "homepage": "http://strictlyskyler.github.io/timeywimey/",
+  "bugs": {
+    "url": "https://github.com/StrictlySkyler/timeywimey/issues",
+    "email": "skyler.brungardt@gmail.com"
+  },
+  "license": "GPL3",
+  "author": {
+    "name": "Skyler Brungardt",
+    "email": "skyler.brungardt@gmail.com",
+    "url": "https://github.com/strictlyskyler"
+  },
+  "contributors": [
+    {
+      "name": "David Powell",
+      "url": "https://github.com/drpowell"
+    }
+  ],
+  "files": [
+    "./LICENSE",
+    "./timeywimey.js",
+    "./timeywimey.coffee"
+  ],
+  "main": "./timeywimey.js"
+
+}
