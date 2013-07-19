@@ -75,13 +75,6 @@ Executes the next task in a given queue immediately, and removes it from the arr
 `TW.lastTask();`
 Executes the last (most recently) added task to the queue, and removes it from the array.
 
-## TODO
-
-- [x] Listen for user-input events, such as keyboard and mouse, and integrate with idle checking.
-- [x] Inline docs.
-- [ ] Add to npm.
-- [ ] Add to bower.
-
 ## Special Thanks
 
 [@drpowell](https://github.com/drpowell) had the original idea, and the entire [OpenBio Codefest 2013](http://www.open-bio.org/wiki/Codefest_2013) group, from where this sprung.
