@@ -1,6 +1,6 @@
 ![Timeywimey Device](http://25.media.tumblr.com/tumblr_lh1tjkLSkG1qa0q13o1_500.jpg)
 
-[Timeywimey](http://strictlyskyler.github.io/timeywimey/) [Device](http://www.youtube.com/watch?v=8LqmAQwHNA0)
+[Timeywimey](http://www.youtube.com/watch?v=LakwV3P3qII) [Device](http://www.youtube.com/watch?v=8LqmAQwHNA0)
 
 A task scheduler and idle-detector for JavaScript.
 
