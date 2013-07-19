@@ -1,5 +1,3 @@
-# timeywimey
-
 ![Timeywimey Device](http://25.media.tumblr.com/tumblr_lh1tjkLSkG1qa0q13o1_500.jpg)
 
 [Timeywimey](http://strictlyskyler.github.io/timeywimey/) [Device](http://www.youtube.com/watch?v=8LqmAQwHNA0)
@@ -72,6 +70,11 @@ Executes the next task in a given queue immediately, and removes it from the arr
 
 `TW.lastTask();`
 Executes the last (most recently) added task to the queue, and removes it from the array.
+
+## TODO
+
+1. Listen for user-input events, such as keyboard and mouse, and integrate with idle checking.
+2. Inline docs.
 
 ## Special Thanks
 
