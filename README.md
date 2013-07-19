@@ -48,6 +48,10 @@ The default amount of time to wait before executing a task.  Increasing this pro
 
 ## API
 
+`bower install timeywimey`
+and/or
+`npm install timeywimey`
+
 Pop it in a script tag, use an async loader, or whathaveyou.  Provided in vanilla and coffee for your tasting preference.
 
 `TW.queueTask(label, callback [, queue]);`
