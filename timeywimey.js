@@ -137,10 +137,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     this.tasks = {};
     this.defaultInterval = 100;
 
-    for (i = 0; i < events.length; i++) {
+    if (root.document) {
+      for (i = 0; i < events.length; i++) {
 
-      document.addEventListener(events[i], userInput);
+        document.addEventListener(events[i], userInput);
 
+      }
     }
 
     checkIdle();
