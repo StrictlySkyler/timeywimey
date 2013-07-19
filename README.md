@@ -73,8 +73,10 @@ Executes the last (most recently) added task to the queue, and removes it from t
 
 ## TODO
 
-1. Listen for user-input events, such as keyboard and mouse, and integrate with idle checking.
-2. Inline docs.
+- [x] Listen for user-input events, such as keyboard and mouse, and integrate with idle checking.
+- [x] Inline docs.
+- [ ] Add to npm.
+- [ ] Add to bower.
 
 ## Special Thanks
 
