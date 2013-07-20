@@ -17,7 +17,7 @@ In other words, we need a scheduler with a li'l bit of brains in it.
 Scheduling a task is simple:
 
 ```javascript
-TW.scheduleTask('breakfast', getSomeCoffee);
+TW.queueTask('breakfast', getSomeCoffee);
 ```
 
 Timeywimey is smart enough to execute the task as soon as it can; either when it thinks your app is idle, or when the timer for that specific task occurs, but only if no new calls have been made to it in the meanwhile.
@@ -25,7 +25,7 @@ Timeywimey is smart enough to execute the task as soon as it can; either when it
 Given the above example, if another task is scheduled for `'breakfast'` before it's been triggered:
 
 ```javascript
-TW.scheduleTask('breakfast', getSomeYogurt);
+TW.queueTask('breakfast', getSomeYogurt);
 ```
 
 The timer is reset, and when it fires it'll trigger both tasks.
