@@ -43,8 +43,8 @@
       TW.queueTask('foo', wat);
 
       var interval = setInterval(function () {
-        TW.queueTask('foo', random, true);
-        TW.queueTask('foo', random, true);
+        TW.queueTask('foo', random, {queue: true, animation: false});
+        TW.queueTask('foo', random, {queue: true, animation: false});
       }, 500);
       
     </script>

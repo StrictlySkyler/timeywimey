@@ -56,13 +56,13 @@ not (setupTimeyWimey = (root) ->
       fuzziness = 2
       
       ###
-      Timeout tracks the difference between when it was called last, and when
-      it executes.  Determines an idle state by speed at which it gets called
-      over a short period of time, and when idle, executes any queued tasks.
-      
+      Uses requestAnimationFrame to track the difference between when it
+      was called last, and when it executes. Determines an idle state by
+      speed at which it gets called over a short period of time, and when
+      idle-ish, executes any queued tasks.
       @return {Function} Recursive; retruns checkIdle function.
       ###
-      setTimeout (idle = ->
+      requestAnimationFrame (idle = ->
         now = Date.now()
         gap = now - lastCalled
         if gap > (_this.tick + fuzziness)
@@ -78,13 +78,14 @@ not (setupTimeyWimey = (root) ->
       ), _this.tick
 
     @idleThreshold = 100
-    @tick = 10
+    @tick = 17
     @tasks = {}
     @defaultInterval = 100
-    i = 0
-    while i < events.length
-      document.addEventListener events[i], userInput
-      i++
+    if root.document
+      i = 0
+      while i < events.length
+        document.addEventListener events[i], userInput
+        i++
     checkIdle()
   
   ###
@@ -93,15 +94,30 @@ not (setupTimeyWimey = (root) ->
   
   @param  {String}   label    Label identifying the tasks to execute.
   @param  {Function} callback The task to execute.
-  @param  {Boolean}   queue    Whether to queue the task with others, or make
-  it a single, standalone task.
+  @param  {Object}   options  Object containing two properties:
+  'queue', and 'animation'.
+  'queue' determines whether to add the callback
+  to an array or not.
+  Defaults to false.
+  'animation' determines whether to use
+  requestAnimationFrame or not.
+  Defaults to true.
   @return {Object}            Returns the labeled object.
   ###
-  TimeyWimey::queueTask = queueTask = (label, callback, queue) ->
+  TimeyWimey::queueTask = queueTask = (label, callback, options) ->
+    timer = ->
+      _this.executeTasks label
+    cancelTask = ->
+      if requestAnimationFrame
+        cancelAnimationFrame _this.tasks[label].timer
+      else
+        clearTimeout _this.tasks[label].timer
     _this = this
-    queue = queue or false
+    options = (if options then options else {})
+    options.queue = options.queue or false
+    options.animation = options.animation or true
     if @tasks[label]
-      clearTimeout @tasks[label].timer  if Date.now() - @tasks[label].start >= @tasks[label].timer
+      cancelTask()  if Date.now() - @tasks[label].start >= @tasks[label].timer
       @tasks[label].callbacks = @tasks[label].callbacks or []
       if @tasks[label].queue
         @tasks[label].callbacks.push callback
@@ -112,10 +128,12 @@ not (setupTimeyWimey = (root) ->
         callbacks: [callback]
         interval: @defaultInterval
         start: Date.now()
-        queue: queue
-    @tasks[label].timer = setTimeout(->
-      _this.executeTasks label
-    , @tasks[label].interval)
+        queue: options.queue
+        animation: options.animation
+    if @tasks[label].animation and requestAnimationFrame
+      @tasks[label].timer = requestAnimationFrame(timer)
+    else
+      @tasks[label].timer = setTimeout(timer, @tasks[label].interval)
     @tasks[label]
 
   
@@ -186,6 +204,31 @@ not (setupTimeyWimey = (root) ->
           @tasks[each].interval = @defaultInterval
           @executeTasks each
     true
+
+  
+  ###
+  Clears out a specific task, removing any items in its queue along with
+  metadata.
+  @param  {String} label The task label to flush.
+  @return {Object}       The task which has been flushed.
+  ###
+  TimeyWimey::flushTask = flushTask = (label) ->
+    task = @tasks[label]
+    delete @tasks[label]
+
+    task
+
+  
+  ###
+  Clears all tasks, removing all queued items and metadata.  Start fresh!
+  @return {Object} An object containing the tasks which have been deleted.
+  ###
+  TimeyWimey::flushAll = flushAll = ->
+    tasks = @tasks
+    each = undefined
+    for each of @tasks
+      delete @tasks[each]  if @tasks.hasOwnProperty(each)
+    tasks
 
   
   ###

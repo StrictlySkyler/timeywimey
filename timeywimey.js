@@ -98,13 +98,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var fuzziness = 2;
 
       /**
-       * Timeout tracks the difference between when it was called last, and when
-       * it executes.  Determines an idle state by speed at which it gets called
-       * over a short period of time, and when idle, executes any queued tasks.
-       * 
+       * Uses requestAnimationFrame to track the difference between when it
+       * was called last, and when it executes. Determines an idle state by
+       * speed at which it gets called over a short period of time, and when
+       * idle-ish, executes any queued tasks.
        * @return {Function} Recursive; retruns checkIdle function.
        */
-      return setTimeout(function idle () {
+      return requestAnimationFrame(function idle () {
         var now = Date.now();
         var gap = now - lastCalled;
 
@@ -133,7 +133,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     this.idleThreshold = 100;
-    this.tick = 10;
+    this.tick = 17;
     this.tasks = {};
     this.defaultInterval = 100;
 
@@ -155,17 +155,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    * 
    * @param  {String}   label    Label identifying the tasks to execute.
    * @param  {Function} callback The task to execute.
-   * @param  {Boolean}   queue    Whether to queue the task with others, or make
-   *                              it a single, standalone task.
+   * @param  {Object}   options  Object containing two properties:
+   *                             'queue', and 'animation'.
+   *                             'queue' determines whether to add the callback
+   *                             to an array or not.  
+   *                             Defaults to false.
+   *                             'animation' determines whether to use 
+   *                             requestAnimationFrame or not.  
+   *                             Defaults to true.
    * @return {Object}            Returns the labeled object.
-   */
-  TimeyWimey.prototype.queueTask = function queueTask (label, callback, queue) {
+   */ 
+  TimeyWimey.prototype.queueTask = function queueTask (label, 
+                                                       callback, 
+                                                       options) {
+
     var _this = this;
-    queue = queue || false;
+
+    options = options ? options : {};
+    options.queue = options.queue || false;
+    options.animation = options.animation || true;
+
+    function timer () {
+      return _this.executeTasks(label);
+    }
+
+    function cancelTask () {
+      if (requestAnimationFrame) {
+        cancelAnimationFrame(_this.tasks[label].timer);
+      } else {
+        clearTimeout(_this.tasks[label].timer);
+      }
+    }
 
     if (this.tasks[label]) {
       if (Date.now() - this.tasks[label].start >= this.tasks[label].timer) {
-        clearTimeout(this.tasks[label].timer);
+
+        cancelTask();
       }
 
       this.tasks[label].callbacks = this.tasks[label].callbacks || [];
@@ -183,13 +208,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         callbacks: [callback],
         interval: this.defaultInterval,
         start: Date.now(),
-        'queue': queue
+        queue: options.queue,
+        animation: options.animation
       };
     }
 
-    this.tasks[label].timer = setTimeout(function () {
-      return _this.executeTasks(label);
-    }, this.tasks[label].interval);
+    if (this.tasks[label].animation
+      && requestAnimationFrame) {
+      this.tasks[label].timer = requestAnimationFrame(timer);
+    } else {
+      this.tasks[label].timer = setTimeout(timer, this.tasks[label].interval);
+    }
 
     return this.tasks[label];
 
