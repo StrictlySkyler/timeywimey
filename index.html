@@ -48,14 +48,14 @@
 
 <p>Scheduling a task is simple:</p>
 
-<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">scheduleTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeCoffee</span><span class="p">);</span>
+<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeCoffee</span><span class="p">);</span>
 </pre></div>
 
 <p>Timeywimey is smart enough to execute the task as soon as it can; either when it thinks your app is idle, or when the timer for that specific task occurs, but only if no new calls have been made to it in the meanwhile.</p>
 
 <p>Given the above example, if another task is scheduled for <code>'breakfast'</code> before it's been triggered:</p>
 
-<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">scheduleTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeYogurt</span><span class="p">);</span>
+<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeYogurt</span><span class="p">);</span>
 </pre></div>
 
 <p>The timer is reset, and when it fires it'll trigger both tasks.</p>
@@ -106,6 +106,19 @@ Executes the next task in a given queue immediately, and removes it from the arr
 
 <p><code>TW.lastTask();</code>
 Executes the last (most recently) added task to the queue, and removes it from the array.</p>
+
+<p><code>TW.flushTask();</code>
+Clears out a task, removing any items in its queue along with metadata.  You get to decide when this happens; TimeyWimey won't do it by default.</p>
+
+<p><code>TW.flushAll();</code>
+Clears all tasks, removing all queued items and metadata.  Start fresh!  Again, this is up to you to decide where to implement; TimeyWimey won't make that decision for you.</p>
+
+<h2>
+<a name="notes" class="anchor" href="#notes"><span class="octicon octicon-link"></span></a>Notes</h2>
+
+<p>"Also, it can boil an egg at 30 paces, whether you want it to or not, actually, so I've learned to stay away from hens."</p>
+
+<p>TimeyWimey uses requestAnimationFrame where it can, for most of the time-oriented things required of it.  However, if the environment in which it's loaded doesn't support that, it'll fall back to using setTimeout, which will tax the CPU a little more, and thus drain the battery faster (laptops, mobile devices, etc.).  May or may not matter for you.</p>
 
 <h2>
 <a name="special-thanks" class="anchor" href="#special-thanks"><span class="octicon octicon-link"></span></a>Special Thanks</h2>
