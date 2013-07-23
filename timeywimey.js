@@ -295,6 +295,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   };
 
   /**
+   * Clears out a specific task, removing any items in its queue along with 
+   * metadata.
+   * @param  {String} label The task label to flush.
+   * @return {Object}       The task which has been flushed.
+   */
+  TimeyWimey.prototype.flushTask = function flushTask (label) {
+
+    var task = this.tasks[label];
+
+    delete this.tasks[label];
+
+    return task;
+
+  };
+
+  /**
+   * Clears all tasks, removing all queued items and metadata.  Start fresh!
+   * @return {Object} An object containing the tasks which have been deleted.
+   */
+  TimeyWimey.prototype.flushAll = function flushAll () {
+
+    var tasks = this.tasks;
+    var each;
+
+    for (each in this.tasks) {
+      if (this.tasks.hasOwnProperty(each)) {
+        delete this.tasks[each];
+      }
+      
+    }
+
+    return tasks;
+
+  };
+
+  /**
    * Called when a Timeywimey thinks it is about to execute a long-running task.
    * Should be overridden by specific implementaions, in order to provide custom
    * feedback to the user; e.g. loading widgets, and the like.

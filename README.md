@@ -75,6 +75,12 @@ Executes the next task in a given queue immediately, and removes it from the arr
 `TW.lastTask();`
 Executes the last (most recently) added task to the queue, and removes it from the array.
 
+`TW.flushTask();`
+Clears out a task, removing any items in its queue along with metadata.  You get to decide when this happens; TimeyWimey won't do it by default.
+
+`TW.flushAll();`
+Clears all tasks, removing all queued items and metadata.  Start fresh!  Again, this is up to you to decide where to implement; TimeyWimey won't make that decision for you.
+
 ## Special Thanks
 
 [@drpowell](https://github.com/drpowell) had the original idea, and the entire [OpenBio Codefest 2013](http://www.open-bio.org/wiki/Codefest_2013) group, from where this sprung.
