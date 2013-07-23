@@ -81,6 +81,12 @@ Clears out a task, removing any items in its queue along with metadata.  You get
 `TW.flushAll();`
 Clears all tasks, removing all queued items and metadata.  Start fresh!  Again, this is up to you to decide where to implement; TimeyWimey won't make that decision for you.
 
+## Notes
+
+"Also, it can boil an egg at 30 paces, whether you want it to or not, actually, so I've learned to stay away from hens."
+
+TimeyWimey uses requestAnimationFrame where it can, for most of the time-oriented things required of it.  However, if the environment in which it's loaded doesn't support that, it'll fall back to using setTimeout, which will tax the CPU a little more, and thus drain the battery faster (laptops, mobile devices, etc.).  May or may not matter for you.
+
 ## Special Thanks
 
 [@drpowell](https://github.com/drpowell) had the original idea, and the entire [OpenBio Codefest 2013](http://www.open-bio.org/wiki/Codefest_2013) group, from where this sprung.
