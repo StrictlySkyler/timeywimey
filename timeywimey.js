@@ -25,6 +25,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 !(function setupTimeyWimey (root) {
 
+  window.requestAnimationFrame =
+    window.requestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    window.setTimeout;
+
+  window.cancelAnimationFrame = 
+    window.cancelAnimationFrame ||
+    window.mozCancelAnimationFrame ||
+    window.webkitCancelAnimationFrame ||
+    window.msCancelAnimationFrame ||
+    window.clearTimeout;
+
   /**
    * Constructor.  Adds event listeners to catch for user input, and initializes
    * timer for idle detection.
@@ -180,11 +194,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 
     function cancelTask () {
-      if (requestAnimationFrame) {
-        cancelAnimationFrame(_this.tasks[label].timer);
-      } else {
-        clearTimeout(_this.tasks[label].timer);
-      }
+      cancelAnimationFrame(_this.tasks[label].timer);
     }
 
     if (this.tasks[label]) {

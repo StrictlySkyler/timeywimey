@@ -87,6 +87,8 @@ not (setupTimeyWimey = (root) ->
         document.addEventListener events[i], userInput
         i++
     checkIdle()
+  window.requestAnimationFrame = window.requestAnimationFrame or window.mozRequestAnimationFrame or window.webkitRequestAnimationFrame or window.msRequestAnimationFrame or window.setTimeout
+  window.cancelAnimationFrame = window.cancelAnimationFrame or window.mozCancelAnimationFrame or window.webkitCancelAnimationFrame or window.msCancelAnimationFrame or window.clearTimeout
   
   ###
   Queues a task to be executed after a given delay.
@@ -108,10 +110,7 @@ not (setupTimeyWimey = (root) ->
     timer = ->
       _this.executeTasks label
     cancelTask = ->
-      if requestAnimationFrame
-        cancelAnimationFrame _this.tasks[label].timer
-      else
-        clearTimeout _this.tasks[label].timer
+      cancelAnimationFrame _this.tasks[label].timer
     _this = this
     options = (if options then options else {})
     options.queue = options.queue or false
