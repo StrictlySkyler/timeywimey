@@ -25,7 +25,7 @@ Timeywimey is smart enough to execute the task as soon as it can; either when it
 Given the above example, if another task is scheduled for `'breakfast'` before it's been triggered:
 
 ```javascript
-TW.queueTask('breakfast', getSomeYogurt, true);
+TW.queueTask('breakfast', getSomeYogurt, {queue: true});
 ```
 
 The timer is reset, and when it fires it'll trigger both tasks.
@@ -54,8 +54,8 @@ and/or
 
 Pop it in a script tag, use an async loader, or whathaveyou.  Provided in vanilla and coffee for your tasting preference.
 
-`TW.queueTask(label, callback [, queue]);`
-Schedule `callback` to be executed when the `label` task is executed.  If the optional `queue` is true, the callback will be added to a queue, with any existing callbacks.  Queueing a task without passing something truthy as the third argument will default to `false`, which replaces the existing queue for this task with the single `callback` just passed.
+`TW.queueTask(label, callback [, options]);`
+Schedule `callback` to be executed when the `label` task is executed.  An optional `options` object may be passed as a third argument, containing boolean flags for `queue` and `animation`.  If, in the options, `queue: true` then the callback will be added to a queue of other callbacks to be executed when the task is executed.  If `animation: false` is passed as one of the options, then a `setTimeout` will be used instead of `requestAnimationFrame`, if for some reason a specific time interval is needed before executing the task.  The `setTimeout` default interval is set to the `TW.defaultInterval`.  `queue` defaults to `false`, and `animation` defaults to `true`.
 
 `TW.executeTasks(label);`
 Executes all queued tasks for a given queue.
