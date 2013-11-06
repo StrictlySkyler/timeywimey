@@ -25,7 +25,7 @@ Timeywimey is smart enough to execute the task as soon as it can; either when it
 Given the above example, if another task is scheduled for `'breakfast'` before it's been triggered:
 
 ```javascript
-TW.queueTask('breakfast', getSomeYogurt);
+TW.queueTask('breakfast', getSomeYogurt, true);
 ```
 
 The timer is reset, and when it fires it'll trigger both tasks.
@@ -34,16 +34,16 @@ Also, if timeywimey thinks that the JS engine isn't doing anything intensive, it
 
 ## Options
 
-`this.idleThreshold`
+`TW.idleThreshold`
 Determines how many ticks pass before timeywimey calls the system "idle".
 
-`this.tick`
+`TW.tick`
 Determines how often to check whether the system is working or not.
 
-`this.tasks`
+`TW.tasks`
 A hash of all the tasks registered for timeywimey.  It's possible to browse this hash for various information about the tasks, or to modify them, if for some reason you need to do so.
 
-`this.defaultInterval`
+`TW.defaultInterval`
 The default amount of time to wait before executing a task.  Increasing this provides more time for all tasks to wait before attempting to execute.
 
 ## API
@@ -67,7 +67,7 @@ Used to execute all the queued tasks when the system is idle, but can be called 
 Overrride this with whatever kind of logic and/or graphics you'd like to show when a long-running task occurs.
 
 `TW.finished();`
-Override this with the logic and/or graphics to show then that long-running task completes.
+Override this with the logic and/or graphics to show when a long-running task completes.
 
 `TW.nextTask();`
 Executes the next task in a given queue immediately, and removes it from the array.
