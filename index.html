@@ -55,7 +55,7 @@
 
 <p>Given the above example, if another task is scheduled for <code>'breakfast'</code> before it's been triggered:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeYogurt</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeYogurt</span><span class="p">,</span> <span class="p">{</span><span class="nx">queue</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
 </pre></div>
 
 <p>The timer is reset, and when it fires it'll trigger both tasks.</p>
@@ -86,8 +86,8 @@ and/or
 
 <p>Pop it in a script tag, use an async loader, or whathaveyou.  Provided in vanilla and coffee for your tasting preference.</p>
 
-<p><code>TW.queueTask(label, callback [, queue]);</code>
-Schedule <code>callback</code> to be executed when the <code>label</code> task is executed.  If the optional <code>queue</code> is true, the callback will be added to a queue, with any existing callbacks.  Queueing a task without passing something truthy as the third argument will default to <code>false</code>, which replaces the existing queue for this task with the single <code>callback</code> just passed.</p>
+<p><code>TW.queueTask(label, callback [, options]);</code>
+Schedule <code>callback</code> to be executed when the <code>label</code> task is executed.  An optional <code>options</code> object may be passed as a third argument, containing boolean flags for <code>queue</code> and <code>animation</code>.  If, in the options, <code>queue: true</code> then the callback will be added to a queue of other callbacks to be executed when the task is executed.  If <code>animation: false</code> is passed as one of the options, then a <code>setTimeout</code> will be used instead of <code>requestAnimationFrame</code>, if for some reason a specific time interval is needed before executing the task.  The <code>setTimeout</code> default interval is set to the <code>TW.defaultInterval</code>.  <code>queue</code> defaults to <code>false</code>, and <code>animation</code> defaults to <code>true</code>.</p>
 
 <p><code>TW.executeTasks(label);</code>
 Executes all queued tasks for a given queue.</p>
