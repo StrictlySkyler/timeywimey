@@ -48,14 +48,14 @@
 
 <p>Scheduling a task is simple:</p>
 
-<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeCoffee</span><span class="p">);</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeCoffee</span><span class="p">);</span>
 </pre></div>
 
 <p>Timeywimey is smart enough to execute the task as soon as it can; either when it thinks your app is idle, or when the timer for that specific task occurs, but only if no new calls have been made to it in the meanwhile.</p>
 
 <p>Given the above example, if another task is scheduled for <code>'breakfast'</code> before it's been triggered:</p>
 
-<div class="highlight"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeYogurt</span><span class="p">);</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">TW</span><span class="p">.</span><span class="nx">queueTask</span><span class="p">(</span><span class="s1">'breakfast'</span><span class="p">,</span> <span class="nx">getSomeYogurt</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
 </pre></div>
 
 <p>The timer is reset, and when it fires it'll trigger both tasks.</p>
@@ -65,16 +65,16 @@
 <h2>
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h2>
 
-<p><code>this.idleThreshold</code>
+<p><code>TW.idleThreshold</code>
 Determines how many ticks pass before timeywimey calls the system "idle".</p>
 
-<p><code>this.tick</code>
+<p><code>TW.tick</code>
 Determines how often to check whether the system is working or not.</p>
 
-<p><code>this.tasks</code>
+<p><code>TW.tasks</code>
 A hash of all the tasks registered for timeywimey.  It's possible to browse this hash for various information about the tasks, or to modify them, if for some reason you need to do so.</p>
 
-<p><code>this.defaultInterval</code>
+<p><code>TW.defaultInterval</code>
 The default amount of time to wait before executing a task.  Increasing this provides more time for all tasks to wait before attempting to execute.</p>
 
 <h2>
@@ -99,7 +99,7 @@ Used to execute all the queued tasks when the system is idle, but can be called 
 Overrride this with whatever kind of logic and/or graphics you'd like to show when a long-running task occurs.</p>
 
 <p><code>TW.finished();</code>
-Override this with the logic and/or graphics to show then that long-running task completes.</p>
+Override this with the logic and/or graphics to show when a long-running task completes.</p>
 
 <p><code>TW.nextTask();</code>
 Executes the next task in a given queue immediately, and removes it from the array.</p>
